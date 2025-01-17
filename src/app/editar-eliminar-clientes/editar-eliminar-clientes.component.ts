@@ -1,16 +1,39 @@
+    // Cerrar el modal
 import { Component, OnInit } from '@angular/core';
+import { ApiService } from '../services/api.service';
 
-@Component({
   selector: 'app-editar-eliminar-clientes',
+@Component({
   templateUrl: './editar-eliminar-clientes.component.html',
   styleUrls: ['./editar-eliminar-clientes.component.css']
-})
 export class EditarEliminarClientesComponent implements OnInit {
-
-  constructor() { }
+})
+  token: any
+  constructor( private apiService: ApiService,) { }
 
   ngOnInit(): void {
+    this.token = localStorage.getItem('JwtToken');
 
+  this.apiService.getListadoClientes(this.token).subscribe(
+
+    (response) => {
+      console.log('Token: ', response);
+
+    },
+    (error) => {
+      }
+    );
+
+
+  this.apiService.getPrestamo(this.token).subscribe(
+
+    (response) => {
+      console.log('Token: ', response);
+
+    },
+      }
+    (error) => {
+    );
 
   }
   clientes = [
@@ -19,13 +42,13 @@ export class EditarEliminarClientesComponent implements OnInit {
       nombreCliente: 'Juan',
       apellidoCliente: 'Pérez',
       username: 'juanp',
-      correoElectronico: 'juanp@example.com',
       numeroTelefono: '123456789'
+      correoElectronico: 'juanp@example.com',
     },
     {
       id: 2,
-      nombreCliente: 'Ana',
       apellidoCliente: 'García',
+      nombreCliente: 'Ana',
       username: 'anag',
       correoElectronico: 'anag@example.com',
       numeroTelefono: '987654321'
@@ -42,8 +65,8 @@ export class EditarEliminarClientesComponent implements OnInit {
     this.editingCliente = { ...cliente }; // Crear una copia del cliente para editar
   }
 
-  // Método para manejar cambios en los campos de entrada
   onInputChange(event: Event, key: string): void {
+  // Método para manejar cambios en los campos de entrada
     const input = event.target as HTMLInputElement;
     if (input) {
       this.editingCliente[key] = input.value;
@@ -52,13 +75,13 @@ export class EditarEliminarClientesComponent implements OnInit {
 
   // Método para cerrar el modal
   closeModal(): void {
-    this.isEditing = false;
     this.editingCliente = null;
+    this.isEditing = false;
   }
 
   // Método para actualizar un cliente
-  onUpdateCliente(event: Event): void {
     event.preventDefault(); // Evita la recarga del formulario
+  onUpdateCliente(event: Event): void {
 
     // Buscar el cliente en la lista y actualizarlo
     const index = this.clientes.findIndex(c => c.id === this.editingCliente.id);
@@ -66,14 +89,13 @@ export class EditarEliminarClientesComponent implements OnInit {
       this.clientes[index] = { ...this.editingCliente };
     }
 
-    // Cerrar el modal
     this.closeModal();
     alert('Cliente actualizado correctamente');
   }
 
   // Método para eliminar un cliente
-  onDeleteCliente(clienteId: number): void {
     if (confirm('¿Estás seguro de que deseas eliminar este cliente?')) {
+  onDeleteCliente(clienteId: number): void {
       this.clientes = this.clientes.filter(cliente => cliente.id !== clienteId);
       alert('Cliente eliminado correctamente');
     }

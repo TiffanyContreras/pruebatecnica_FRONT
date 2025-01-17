@@ -7,18 +7,49 @@ import { Observable } from 'rxjs';
 })
 export class ApiService {
   private baseUrl = 'https://api.tuservidor.com'; // Cambia por la URL base de tu API
-  BASEAPI = 'http://localhost:8081/';
+  BASEAPI = 'http://localhost:8080/';
 
   APICLIENTES = this.BASEAPI + 'clientes/v1';
+  APIPRESTAMO = this.BASEAPI + '/prestamo/v1';
 
   constructor(private http: HttpClient) {}
 
   //obtiene listado de clientes registrados
-  getListadoClientes(){
-    return this.http.get(`${this.APICLIENTES}/lista`);
+  getListadoClientes(token:any){
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json',
+
+
+    });
+    return this.http.request<any>('GET', this.APICLIENTES+"/lista", {
+        headers: headers
+    });
+   // return this.http.get(`${this.APICLIENTES}/lista`);
+  }
+ getPrestamo(token:any){
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json',
+
+
+    });
+    return this.http.request<any>('GET', this.APIPRESTAMO+`/prestamo/${3}`, {
+        headers: headers
+    });3
+   // return this.http.get(`${this.APICLIENTES}/lista`);
   }
 
+  postLogin(body: any){
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
 
+    return this.http.request<any>('POST', this.BASEAPI+"auth/login", {
+      body: body, // Aquí se envía el body
+
+    });
+  }
 
 
   // Obtener una lista de datos (GET)

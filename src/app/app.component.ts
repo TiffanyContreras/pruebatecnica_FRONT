@@ -11,10 +11,17 @@ export class AppComponent {
   title = 'prueba-tecnica';
  constructor(private router: Router) {}
 
-  ngOnInit(): void {
 
-  this.router.navigate(['login']);
+ ngOnInit() {
+  const token = localStorage.getItem('JwtToken');
+    if (token) {
+      // Si hay un token, redirigir a otro componente (por ejemplo, el dashboard)
+      this.router.navigate(['menu']);
+      // Si no hay un token, redirigir al login
+    } else {
+      this.router.navigate(['login']);
   }
+    }
 }
 
 

@@ -1,0 +1,56 @@
+.loan-list-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #ecf0f1;
+  font-family: 'Arial', sans-serif;
+  padding: 1rem;
+}
+
+/* Caja del listado */
+.loan-list-box {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 900px;
+  text-align: center;
+}
+
+/* Título */
+.loan-list-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+}
+
+/* Tabla de préstamos */
+.loan-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.loan-table th,
+.loan-table td {
+  padding: 0.8rem;
+  text-align: center;
+  border: 1px solid #dfe6e9;
+  font-size: 0.9rem;
+  color: #2d3436;
+}
+
+.loan-table th {
+  background-color: #3498db;
+  color: white;
+}
+
+/* Mensaje sin datos */
+.no-data {
+  margin-top: 1.5rem;
+  font-size: 1rem;
+  color: #7f8c8d;
+}

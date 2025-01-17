@@ -1,1 +1,49 @@
-<p>pagos-aprobados works!</p>
+<div class="payment-container">
+  <div class="payment-box">
+    <h1 class="payment-title">Realizar Pago de Préstamo</h1>
+
+    <form [formGroup]="paymentForm" (ngSubmit)="realizarPago()">
+      <!-- ID del Préstamo -->
+      <div class="form-group">
+        <label for="idPrestamo">ID del Préstamo</label>
+        <input
+          type="number"
+          id="idPrestamo"
+          formControlName="idPrestamo"
+          class="form-control"
+          placeholder="Ingrese el ID del préstamo"
+          required
+        />
+      </div>
+
+      <!-- Abono al Préstamo -->
+      <div class="form-group">
+        <label for="abonoPrestamo">Abono al Préstamo</label>
+        <input
+          type="number"
+          id="abonoPrestamo"
+          formControlName="abonoPrestamo"
+          class="form-control"
+          placeholder="Ingrese el monto a abonar"
+          required
+        />
+      </div>
+
+      <!-- Usuario que modifica -->
+      <div class="form-group">
+        <label for="usuarioModifica">Usuario</label>
+        <input
+          type="text"
+          id="usuarioModifica"
+          formControlName="usuarioModifica"
+          class="form-control"
+          placeholder="Ingrese su usuario"
+          required
+        />
+      </div>
+
+      <!-- Botón para realizar el pago -->
+      <button type="submit" class="btn btn-primary">Realizar Pago</button>
+    </form>
+  </div>
+</div>

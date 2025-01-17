@@ -7,10 +7,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent implements OnInit {
-
+  token: any
   constructor(private router: Router,) { }
 
   ngOnInit(): void {
+   this.token = localStorage.getItem('JwtToken');
+   console.log(this.token);
   }
 
   navigateTo(page: string): void {
@@ -18,11 +20,22 @@ export class MenuComponent implements OnInit {
     if(page=='listaClientes'){
 
     this.router.navigate(['/editarEliminarClientes']);
+
     }else if(page=='solicitudPrestamo'){
 
     this.router.navigate(['/solicitudPrestamo']);
-    }
-    // Aquí puedes agregar lógica de navegación, como redirigir a rutas específicas
-  }
 
+
+    }else if(page=='estadoPrestamos'){
+      this.router.navigate(['/estadoPrestamos'])
+
+    }else if(page=='informacionPrestamosAprobados'){
+      this.router.navigate(['/informacionPrestamosAprobados'])
+
+    // Aquí puedes agregar lógica de navegación, como redirigir a rutas específicas
+  }else if(page=='pagosAprobados'){
+    this.router.navigate(['/pagosAprobados'])
+
+  }
+  }
 }

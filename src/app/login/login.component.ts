@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from '../services/api.service';
-
+import { localS } from '../services/localStorage';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -11,20 +11,12 @@ export class LoginComponent {
 
   //getListadoClientes
   constructor(private router: Router,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private localStorage: localS
+
   ) {}
+
   ngOnInit(): void {
-
-    this.apiService.getListadoClientes().subscribe(
-      (response) => {
-        console.log('Usuarios obtenidos:', response);
-      },
-      (error) => {
-        console.error('Error al obtener usuarios:', error);
-      }
-    );
-
-
   }
 
 
@@ -38,15 +30,37 @@ export class LoginComponent {
 
     console.log('Usuario:', username);
     console.log('Contraseña:', password);
+    let bodyParams = {
+      usuario: username,
+      contrasena: password
+    };
+    this.apiService.postLogin(bodyParams).subscribe(
+      (response) => {
+        console.log('Token: ', response);
+        this.router.navigate(['menu']);
+      },
+      (error) => {
+        console.error('Error al obtener usuarios:', );
+        if(error['error']['text']){
+
+          console.log('Token: ', error['error']['text']);
+          this.localStorage.guardarDato(error['error']['text']);
+          this.router.navigate(['menu']);
+      }else{
+        console.log('USUARIO O CONTRASEÑA INCORRECTA')
+      }
+        }
+
+    );
 
     // Simula la validación
-    if (username === 'usuario' && password === 'password') {
+    /* if (username === 'usuario' && password === 'password') {
       console.log('Inicio de sesión exitoso');
       //this.router.navigate(['solicitudPrestamo']);
       this.router.navigate(['menu']);
     } else {
       alert('Usuario o contraseña incorrectos');
-    }
+    } */
   }
 
   navigateToRegisterCliente(): void {
