@@ -2,58 +2,50 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../services/api.service';
 
+
+interface Cliente {
+    idCliente: number;
+    numeroTelefono: string;
+    numeroIdentificacion: string;
+    correoElectronico: string;
+    direccionCliente: string;
+    fechaNacimiento: string; // Puedes usar Date si lo necesitas como objeto Date
+    informacionCliente: string;
+}
+
+@Component({
   selector: 'app-editar-eliminar-clientes',
 @Component({
   templateUrl: './editar-eliminar-clientes.component.html',
   styleUrls: ['./editar-eliminar-clientes.component.css']
+})
+
+
 export class EditarEliminarClientesComponent implements OnInit {
 })
   token: any
+
+  clientes: Cliente[]=[];
+
+
   constructor( private apiService: ApiService,) { }
 
   ngOnInit(): void {
-    this.token = localStorage.getItem('JwtToken');
-
-  this.apiService.getListadoClientes(this.token).subscribe(
-
-    (response) => {
-      console.log('Token: ', response);
-
-    },
-    (error) => {
-      }
-    );
 
 
-  this.apiService.getPrestamo(this.token).subscribe(
+  this.apiService.getListadoClientes().subscribe(
 
     (response) => {
-      console.log('Token: ', response);
-
+      this.clientes=response;
     },
       }
     (error) => {
     );
+
+
 
   }
-  clientes = [
-    {
-      id: 1,
-      nombreCliente: 'Juan',
-      apellidoCliente: 'Pérez',
-      username: 'juanp',
-      numeroTelefono: '123456789'
-      correoElectronico: 'juanp@example.com',
-    },
-    {
-      id: 2,
-      apellidoCliente: 'García',
-      nombreCliente: 'Ana',
-      username: 'anag',
-      correoElectronico: 'anag@example.com',
-      numeroTelefono: '987654321'
-    }
-  ];
+
 
   // Control para el modal de edición
   isEditing = false;
@@ -81,23 +73,32 @@ export class EditarEliminarClientesComponent implements OnInit {
 
   // Método para actualizar un cliente
     event.preventDefault(); // Evita la recarga del formulario
-  onUpdateCliente(event: Event): void {
-
+    console.log("los datos son:", this.editingCliente);
     // Buscar el cliente en la lista y actualizarlo
-    const index = this.clientes.findIndex(c => c.id === this.editingCliente.id);
+    /* const index = this.clientes.findIndex(c => c.idCliente === this.editingCliente.id);
     if (index !== -1) {
       this.clientes[index] = { ...this.editingCliente };
     }
-
+ */
+    // Cerrar el modal
     this.closeModal();
     alert('Cliente actualizado correctamente');
   }
 
   // Método para eliminar un cliente
     if (confirm('¿Estás seguro de que deseas eliminar este cliente?')) {
-  onDeleteCliente(clienteId: number): void {
-      this.clientes = this.clientes.filter(cliente => cliente.id !== clienteId);
-      alert('Cliente eliminado correctamente');
+      this.apiService.deletePrestamo(clienteId).subscribe(
+        (response) => {
+          console.log('Response: ', response);
+        },
+        (error) => {
+          console.log('Error: ', error);
+          if(error['error']['text']=="Cliente eliminado correctamente"){
+            this.clientes = this.clientes.filter(cliente => cliente.idCliente !== clienteId);
+            alert('Cliente eliminado correctamente');
+          }
+        }
+      );
     }
   }
 }

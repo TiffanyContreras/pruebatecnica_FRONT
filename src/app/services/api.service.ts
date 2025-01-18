@@ -6,48 +6,40 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ApiService {
+
+  token = localStorage.getItem('JwtToken');
+
   private baseUrl = 'https://api.tuservidor.com'; // Cambia por la URL base de tu API
   BASEAPI = 'http://localhost:8080/';
 
   APICLIENTES = this.BASEAPI + 'clientes/v1';
-  APIPRESTAMO = this.BASEAPI + '/prestamo/v1';
+  APIPRESTAMO = this.BASEAPI + 'prestamo/v1';
 
   constructor(private http: HttpClient) {}
 
   //obtiene listado de clientes registrados
-  getListadoClientes(token:any){
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json',
-
-
-    });
+  getListadoClientes(){
     return this.http.request<any>('GET', this.APICLIENTES+"/lista", {
-        headers: headers
     });
-   // return this.http.get(`${this.APICLIENTES}/lista`);
   }
- getPrestamo(token:any){
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json',
 
-
+  getPrestamo(ID: any){
+    return this.http.request<any>('GET', this.APIPRESTAMO+`/prestamo/${ID}`, {
     });
-    return this.http.request<any>('GET', this.APIPRESTAMO+`/prestamo/${3}`, {
-        headers: headers
-    });3
-   // return this.http.get(`${this.APICLIENTES}/lista`);
   }
+  deletePrestamo(ID: any){
+      return this.http.request<any>('DELETE', this.APICLIENTES+`/elimina/${ID}`, {
+      });
+    }
 
   postLogin(body: any){
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
-    });
-
     return this.http.request<any>('POST', this.BASEAPI+"auth/login", {
       body: body, // Aquí se envía el body
-
+    });
+  }
+  postGenerarPrestamo(body: any){
+    return this.http.request<any>('POST', this.APIPRESTAMO+"/generar", {
+      body: body, // Aquí se envía el body
     });
   }
 

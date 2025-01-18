@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ApiService } from '../services/api.service';
 
 @Component({
   selector: 'app-solicitud-prestamo',
@@ -9,7 +10,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class SolicitudPrestamoComponent implements OnInit {
   loanForm: FormGroup;
 
-  constructor(private fb: FormBuilder) { this.loanForm = this.fb.group({
+  constructor(
+    private apiService: ApiService,
+    private fb: FormBuilder) { this.loanForm = this.fb.group({
     idCliente: [null, [Validators.required]],
     montoSolicitado: [null, [Validators.required, Validators.min(1)]],
     plazoSolicitado: [null, [Validators.required, Validators.min(1)]]
@@ -18,13 +21,20 @@ export class SolicitudPrestamoComponent implements OnInit {
   ngOnInit(): void {
 
   }
-
+//postGenerarPrestamo
   onSubmit(): void {
     if (this.loanForm.valid) {
       const confirmacion = confirm('¿Está seguro de enviar la solicitud de préstamo?');
       if (confirmacion) {
-        alert('¡Solicitud enviada exitosamente!');
-        console.log(this.loanForm.value);
+
+        this.apiService.postGenerarPrestamo(this.loanForm.value).subscribe(
+          (response) => {
+            alert('¡Solicitud enviada exitosamente!');
+          },
+          (error) => {
+            console.log('Error: ', error);
+          }
+        );
       }
     } else {
       alert('Por favor, complete todos los campos correctamente.');

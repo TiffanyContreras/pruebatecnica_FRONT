@@ -1,5 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ApiService } from '../services/api.service';
+
+interface Cliente {
+  clienteId:number;
+  estado:string;
+  fechaCreacion:string;
+  informacionCliente:string;
+  montoSolicitado:number;
+  numeroTelefono:number;
+  plazo:number;
+}
 
 @Component({
   selector: 'app-estado-prestamos',
@@ -17,13 +28,26 @@ export class EstadoPrestamosComponent implements OnInit {
     { idCliente: 3, montoSolicitado: 15000, plazoSolicitado: 36 }
   ];
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private apiService: ApiService,
+    private fb: FormBuilder) {
     this.searchForm = this.fb.group({
       idCliente: [null, [Validators.required, Validators.min(1)]]
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+
+  this.apiService.getPrestamo(9).subscribe(
+
+    (response) => {
+      console.log('Token: ', response);
+
+    },
+    (error) => {
+      }
+    );
+  }
 
   buscarPrestamo(): void {
     const idCliente = this.searchForm.get('idCliente')?.value;
