@@ -5,6 +5,7 @@
   height: 100vh;
   background-color: #f8f9fa;
   font-family: 'Arial', sans-serif;
+  overflow: hidden; /* Evita desbordamiento en la pantalla principal */
 }
 
 /* Tarjeta del formulario */
@@ -16,7 +17,9 @@
   text-align: center;
   width: 100%;
   max-width: 500px;
-  overflow-y: auto;
+  max-height: 90vh; /* Limita la altura máxima al 90% del viewport */
+  overflow-y: auto; /* Activa el scroll vertical si el contenido es demasiado grande */
+  box-sizing: border-box; /* Asegura que padding y borde no desborden el contenedor */
 }
 
 /* Título del formulario */

@@ -33,9 +33,15 @@ export class MenuComponent implements OnInit {
       this.router.navigate(['/informacionPrestamosAprobados'])
 
     // Aquí puedes agregar lógica de navegación, como redirigir a rutas específicas
-  }else if(page=='pagosAprobados'){
+    }else if(page=='pagosAprobados'){
     this.router.navigate(['/pagosAprobados'])
 
-  }
+    }else if(page=='registroClientes'){
+      this.router.navigate(['/registroClientes'])
+
+      }else if(page=='registroEmpleados'){
+        this.router.navigate(['/registroEmpleados'])
+
+        }
   }
 }

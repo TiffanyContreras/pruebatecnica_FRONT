@@ -45,6 +45,7 @@ export class LoginComponent {
 
           console.log('Token: ', error['error']['text']);
           this.localStorage.guardarDato(error['error']['text']);
+          this.localStorage.guardarUsuario(username);
           this.router.navigate(['menu']);
       }else{
         console.log('USUARIO O CONTRASEÑA INCORRECTA')
@@ -63,12 +64,6 @@ export class LoginComponent {
     } */
   }
 
-  navigateToRegisterCliente(): void {
-    this.router.navigate(['/registroClientes']);
-  }
 
-  navigateToRegisterEmpleado(): void {
-    this.router.navigate(['/registroEmpleados']);
-  }
 
 }

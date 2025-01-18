@@ -1,4 +1,16 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiService } from '../services/api.service';
+
+export interface Prestamo {
+  saldoPendiente: number;      // Saldo pendiente del préstamo
+  idCliente: number;           // ID del cliente
+  numeroTelefono: number;      // Número de teléfono del cliente
+  nombreCliente: string;       // Nombre del cliente
+  idPrestamo: number;          // ID del préstamo
+  montoAprobado: number;       // Monto aprobado para el préstamo
+  cantidadPagos: number;       // Cantidad de pagos realizados o pendientes
+}
+
 
 @Component({
   selector: 'app-informacion-prestamos-aprobados',
@@ -6,31 +18,22 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./informacion-prestamos-aprobados.component.css']
 })
 export class InformacionPrestamosAprobadosComponent implements OnInit {
-  prestamosAprobados = [
-    {
-      numeroTelefono: 555123456,
-      nombreCliente: 'Juan Pérez',
-      idPrestamo: 101,
-      saldoPendiente: 2500,
-      idCliente: 1,
-      montoAprobado: 5000,
-      cantidadPagos: 12
-    },
-    {
-      numeroTelefono: 555654321,
-      nombreCliente: 'Ana García',
-      idPrestamo: 102,
-      saldoPendiente: 1000,
-      idCliente: 2,
-      montoAprobado: 3000,
-      cantidadPagos: 6
-    }
-  ];
+  prestamosAprobados: Prestamo[] =[];
 
-  constructor(/* private http: HttpClient */) {}
+  constructor( private apiService: ApiService,) {}
 
   ngOnInit(): void {
-    /* this.cargarPrestamosAprobados(); */
+    this.apiService.getListadoAprobados( ).subscribe(
+
+      (response) => {
+        this.prestamosAprobados = response;
+        console.log('Listado ', this.prestamosAprobados);
+
+      },
+      (error) => {
+        }
+      );
+
   }
 
  /*  cargarPrestamosAprobados(): void {

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiService } from '../services/api.service';
 
 @Component({
   selector: 'app-registro-empleados',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegistroEmpleadosComponent implements OnInit {
 
-  constructor() { }
+  constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
   }
@@ -17,15 +18,49 @@ export class RegistroEmpleadosComponent implements OnInit {
     const form = event.target as HTMLFormElement;
 
     // Obtén los valores de los campos
-    const nombre = (form.querySelector('#nombre') as HTMLInputElement).value;
-    const apellido = (form.querySelector('#apellido') as HTMLInputElement).value;
-    const username = (form.querySelector('#username') as HTMLInputElement).value;
-    const password = (form.querySelector('#password') as HTMLInputElement).value;
+
+    const passwordInput = form.querySelector('#password') as HTMLInputElement;
+    const nombreInput = form.querySelector('#nombre') as HTMLInputElement;
+    const usernameInput = form.querySelector('#username') as HTMLInputElement;
+    const apellidoInput = form.querySelector('#apellido') as HTMLInputElement;
+
+    // Obtener el valor (si lo necesitas para algo más)
+    const password: string = passwordInput.value;
+    const nombre: string = nombreInput.value;
+    const username: string = usernameInput.value;
+    const apellido: string = apellidoInput.value;
+
+    // Limpiar el campo
+
 
     // Muestra los datos capturados en consola
-    console.log('Datos del empleado:', { nombre, apellido, username, password });
+      if(nombre.length > 0 && apellido.length > 0 && username.length > 0 && password.length > 0){
+        const body={
+          "username": username,
+          "password": password,
+          "nombre": nombre,
+          "apellido": apellido
+        }
+      this.apiService.postRegistrarEmpleado(body ).subscribe(
+
+        (response) => {
+          console.log('Listado ', response);
+
+        },
+        (error) => {
+          if(error['error']['text']=='Usuario empleado creado correctamente'){
+            alert('Empleado registrado exitosamente');
+            passwordInput.value = '';
+            nombreInput.value = '';
+            usernameInput.value = '';
+            apellidoInput.value = '';
+          }
+          console.log('Listado ', error);
+          }
+        );
+    }
 
     // Aquí puedes agregar lógica para enviar los datos al backend
-    alert('Empleado registrado exitosamente');
+
   }
 }

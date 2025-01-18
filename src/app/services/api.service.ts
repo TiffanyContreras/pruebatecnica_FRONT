@@ -9,7 +9,6 @@ export class ApiService {
 
   token = localStorage.getItem('JwtToken');
 
-  private baseUrl = 'https://api.tuservidor.com'; // Cambia por la URL base de tu API
   BASEAPI = 'http://localhost:8080/';
 
   APICLIENTES = this.BASEAPI + 'clientes/v1';
@@ -22,16 +21,52 @@ export class ApiService {
     return this.http.request<any>('GET', this.APICLIENTES+"/lista", {
     });
   }
+  getListadoAprobados(){
+    return this.http.request<any>('GET', this.BASEAPI+"aprobado/v1/obtener", {
+    });
+  }
 
-  getPrestamo(ID: any){
-    return this.http.request<any>('GET', this.APIPRESTAMO+`/prestamo/${ID}`, {
+  getPrestamo(){
+    return this.http.request<any>('GET', this.APIPRESTAMO+`/lista/en-proceso`, {
     });
   }
   deletePrestamo(ID: any){
       return this.http.request<any>('DELETE', this.APICLIENTES+`/elimina/${ID}`, {
       });
     }
+  putActualizarCliente(body: any,ID: any){
+      return this.http.request<any>('PUT', this.APICLIENTES+`/actualizar/${ID}`, {
+        body: body,
+      });
+    }
 
+    postAprobarPrestamo(body: any){
+      return this.http.request<any>('POST', this.BASEAPI+`pago/v1/pagar`, {
+        body: body,
+      });
+    }
+      postCrearCliente(body: any){
+            return this.http.request<any>('POST', this.APICLIENTES+`/crear`, {
+              body: body,
+            });
+     }
+
+    postRegistrarEmpleado(body: any){
+          return this.http.request<any>('POST', this.BASEAPI+`empleados/v1/crear`, {
+            body: body,
+          });
+    }
+
+    postPago(body: any){
+      return this.http.request<any>('POST', this.APIPRESTAMO+`/aprobar`, {
+        body: body,
+      });
+    }
+    postRechazarPrestamo(body: any){
+      return this.http.request<any>('POST', this.APIPRESTAMO+`/rechaza`, {
+        body: body,
+      });
+    }
   postLogin(body: any){
     return this.http.request<any>('POST', this.BASEAPI+"auth/login", {
       body: body, // Aquí se envía el body
@@ -44,31 +79,4 @@ export class ApiService {
   }
 
 
-  // Obtener una lista de datos (GET)
-  getData(endpoint: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/${endpoint}`);
-  }
-
-  // Enviar datos al servidor (POST)
-  postData(endpoint: string, data: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/${endpoint}`, data, {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
-    });
-  }
-
-  // Actualizar datos en el servidor (PUT)
-  updateData(endpoint: string, data: any): Observable<any> {
-    return this.http.put(`${this.baseUrl}/${endpoint}`, data, {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
-    });
-  }
-
-  // Eliminar un recurso (DELETE)
-  deleteData(endpoint: string): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/${endpoint}`);
-  }
 }

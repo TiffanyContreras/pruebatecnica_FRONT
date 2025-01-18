@@ -5,6 +5,9 @@
   height: 100vh;
   background-color: #ecf0f1;
   font-family: 'Arial', sans-serif;
+  padding: 2rem; /* Agregado para manejar tablas más anchas */
+  box-sizing: border-box; /* Asegura que el padding no desborde */
+  overflow-x: auto; /* Permite desplazamiento horizontal en caso de ser necesario */
 }
 
 /* Caja de búsqueda */
@@ -13,8 +16,10 @@
   padding: 2rem;
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  width: 400px;
+  max-width: 90%; /* Limita el ancho para que no desborde */
+  width: 800px; /* Incrementado para acomodar tablas más grandes */
   text-align: center;
+  box-sizing: border-box;
 }
 
 /* Título */
@@ -60,9 +65,10 @@
 
 /* Tabla de resultados */
 .results-table {
-  width: 100%;
+  width: 100%; /* Ajusta automáticamente al tamaño del contenedor */
   border-collapse: collapse;
   margin-top: 1.5rem;
+  overflow-x: auto; /* Desplazamiento horizontal si es necesario */
 }
 
 .results-table th,
@@ -72,6 +78,7 @@
   border: 1px solid #dfe6e9;
   font-size: 0.9rem;
   color: #2d3436;
+  word-wrap: break-word; /* Permite dividir texto largo */
 }
 
 .results-table th {
@@ -106,4 +113,40 @@
 
 .btn-reject:hover {
   background-color: #ff7675;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 400px;
+  text-align: center;
+}
+
+.modal-actions {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.modal-actions .btn {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  border-radius: 6px;
 }

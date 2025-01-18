@@ -6,23 +6,31 @@
       <button class="btn btn-search" (click)="buscarPrestamo()">Buscar</button>
     </div>
 
-    <table class="results-table" *ngIf="prestamo">
+    <table class="results-table" *ngIf="mostrarTabla">
       <thead>
         <tr>
           <th>ID Cliente</th>
+          <th>Cliente</th>
+          <th>Telefono</th>
+          <th>Fecha Creacion</th>
           <th>Monto Solicitado</th>
-          <th>Plazo Solicitado</th>
+          <th>Plazo</th>
+          <th>Estado</th>
           <th>Acciones</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>{{ prestamo.idCliente }}</td>
-          <td>{{ prestamo.montoSolicitado }}</td>
-          <td>{{ prestamo.plazoSolicitado }} meses</td>
-          <td>
-            <button class="btn btn-approve" (click)="aprobarPrestamo()">✔</button>
-            <button class="btn btn-reject" (click)="rechazarPrestamo()">✖</button>
+        <tr *ngFor="let prestamo of prestamos; let i = index">
+          <td *ngIf="prestamo.clienteId == idCliente">{{ prestamo.clienteId }}</td>
+          <td *ngIf="prestamo.clienteId == idCliente">{{ prestamo.informacionCliente }}</td>
+          <td *ngIf="prestamo.clienteId == idCliente">{{ prestamo.numeroTelefono }}</td>
+          <td *ngIf="prestamo.clienteId == idCliente">{{ prestamo.fechaCreacion }}</td>
+          <td *ngIf="prestamo.clienteId == idCliente">{{ prestamo.montoSolicitado }}</td>
+          <td *ngIf="prestamo.clienteId == idCliente">{{ prestamo.plazo }} meses</td>
+          <td *ngIf="prestamo.clienteId == idCliente">{{ prestamo.estado }}</td>
+          <td *ngIf="prestamo.clienteId == idCliente">
+            <button class="btn btn-approve" (click)="Prestamo(prestamo.idPrestamo,1)">✔</button>
+            <button class="btn btn-reject" (click)="Prestamo(prestamo.idPrestamo,2)">✖</button>
           </td>
         </tr>
       </tbody>
@@ -30,3 +38,55 @@
   </div>
 </div>
 
+<div *ngIf="mostrarVentanaEmergente && opcion == 1" class="modal-overlay">
+  <div class="modal-content">
+    <h3>Introduce los datos</h3>
+    <form [formGroup]="datosFormAprueba">
+      <div>
+        <label for="idPrestamo">Id Prestamo</label>
+        <input id="idPrestamo" formControlName="idPrestamo" type="text" [readonly]="true" />
+      </div>
+      <div>
+        <label for="usuarioAprueba">Usuario</label>
+        <input id="usuarioAprueba" formControlName="usuarioAprueba" type="text"  />
+      </div>
+      <div>
+        <label for="comentario">Comentario:</label>
+        <input id="comentario" formControlName="comentario" type="text" />
+      </div>
+    </form>
+    <div class="modal-actions">
+      <!-- opcion APRUEBA -->
+      <button *ngIf="opcion ==1" (click)="guardarDatos(opcion)" class="btn btn-success"
+      [disabled]="!this.datosFormAprueba.valid">Aceptar</button>
+
+      <button (click)="cerrarVentanaEmergente()" class="btn btn-danger">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="mostrarVentanaEmergente && opcion == 2" class="modal-overlay">
+  <div class="modal-content">
+    <h3>Introduce los datos</h3>
+    <form [formGroup]="datosFormRechaza">
+      <div>
+        <label for="idPrestamo">Id Prestamo</label>
+        <input id="idPrestamo" formControlName="idPrestamo" type="text" [readonly]="true" />
+      </div>
+      <div>
+        <label for="usuarioRechaza">Usuario</label>
+        <input id="usuarioRechaza" formControlName="usuarioRechaza" type="text"  />
+      </div>
+      <div>
+        <label for="comentario">Comentario:</label>
+        <input id="comentario" formControlName="comentario" type="text" />
+      </div>
+    </form>
+    <div class="modal-actions">
+      <button (click)="guardarDatos(opcion)" class="btn btn-success"
+       [disabled]="!this.datosFormRechaza.valid">Aceptar</button>
+      <button (click)="cerrarVentanaEmergente()" class="btn btn-danger">Cancelar</button>
+    </div>
+  </div>
+</div>
