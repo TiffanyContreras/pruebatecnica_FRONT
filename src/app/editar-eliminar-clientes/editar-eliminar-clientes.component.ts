@@ -14,15 +14,13 @@ interface Cliente {
 }
 
 @Component({
-  selector: 'app-editar-eliminar-clientes',
-@Component({
   templateUrl: './editar-eliminar-clientes.component.html',
   styleUrls: ['./editar-eliminar-clientes.component.css']
 })
 
 
 export class EditarEliminarClientesComponent implements OnInit {
-})
+
   token: any
 
   clientes: Cliente[]=[];
@@ -38,11 +36,9 @@ export class EditarEliminarClientesComponent implements OnInit {
     (response) => {
       this.clientes=response;
     },
-      }
     (error) => {
+    }
     );
-
-
 
   }
 
@@ -71,6 +67,7 @@ export class EditarEliminarClientesComponent implements OnInit {
     this.isEditing = false;
   }
 
+  onUpdateCliente(event: any){
   // Método para actualizar un cliente
     event.preventDefault(); // Evita la recarga del formulario
     console.log("los datos son:", this.editingCliente);
@@ -84,7 +81,7 @@ export class EditarEliminarClientesComponent implements OnInit {
     this.closeModal();
     alert('Cliente actualizado correctamente');
   }
-
+  onDeleteCliente(clienteId: any){
   // Método para eliminar un cliente
     if (confirm('¿Estás seguro de que deseas eliminar este cliente?')) {
       this.apiService.deletePrestamo(clienteId).subscribe(

@@ -26,15 +26,13 @@ export const appRoutes: Routes = [
 		path: 'editarEliminarClientes',
 		component: EditarEliminarClientesComponent,
 
-  {
-	},
+	},{
 		path: 'estadoPrestamos',
 		component: EstadoPrestamosComponent,
 
-	},
+	},{
 		component: PagosAprobadosComponent,
 		path: 'pagosAprobados',
-  {
 
 	},
   {
@@ -47,20 +45,19 @@ export const appRoutes: Routes = [
 		component: RegistroClienteComponent,
 
 	},
-		path: 'registroEmpleados',
   {
+		path: 'registroEmpleados',
 		component: RegistroEmpleadosComponent,
 	},
-
-		path: 'solicitudPrestamo',
   {
+		path: 'solicitudPrestamo',
 		component: SolicitudPrestamoComponent,
 
 	},{
 		path: 'menu',
 		component: MenuComponent,
 	},
-{
+  {
 		path: 'informacionPrestamosAprobados',
 		component: InformacionPrestamosAprobadosComponent,
 
