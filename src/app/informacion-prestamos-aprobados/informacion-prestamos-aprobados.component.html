@@ -1,0 +1,32 @@
+<div class="loan-list-container">
+  <div class="loan-list-box">
+    <h1 class="loan-list-title">Listado de Préstamos Aprobados</h1>
+
+    <table class="loan-table" *ngIf="prestamosAprobados.length > 0">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Teléfono</th>
+          <th>Cliente</th>
+          <th>ID Préstamo</th>
+          <th>Saldo Pendiente</th>
+          <th>Monto Aprobado</th>
+          <th>Cantidad de Pagos</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let prestamo of prestamosAprobados; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ prestamo.numeroTelefono }}</td>
+          <td>{{ prestamo.nombreCliente }}</td>
+          <td>{{ prestamo.idPrestamo }}</td>
+          <td>{{ prestamo.saldoPendiente}}</td>
+          <td>{{ prestamo.montoAprobado}}</td>
+          <td>{{ prestamo.cantidadPagos }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p *ngIf="prestamosAprobados.length === 0" class="no-data">No hay préstamos aprobados para mostrar.</p>
+  </div>
+</div>

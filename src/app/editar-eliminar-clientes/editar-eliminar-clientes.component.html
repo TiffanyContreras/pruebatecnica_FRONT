@@ -1,0 +1,95 @@
+<div class="client-list-container">
+  <div class="client-list-card">
+    <h1 class="client-list-title">Lista de Clientes</h1>
+
+    <!-- Tabla para listar los clientes -->
+    <table class="client-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Numero Telefonico</th>
+          <th>Numero Identificacion</th>
+          <th>Correo Electronico</th>
+          <th>Direccion Cliente</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cliente of clientes; let i = index">
+          <td>{{ cliente.idCliente}}</td>
+          <td>{{ cliente.numeroTelefono }}</td>
+          <td>{{ cliente.numeroIdentificacion }}</td>
+          <td>{{ cliente.correoElectronico }}</td>
+          <td>{{ cliente.direccionCliente }}</td>
+          <td>
+            <button class="btn btn-edit" (click)="onEditCliente(cliente)">Editar</button>
+            <button class="btn btn-delete" (click)="onDeleteCliente(cliente.idCliente)">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Modal para editar cliente -->
+  <div class="modal" *ngIf="isEditing">
+    <div class="modal-content">
+      <h2>Editar Cliente</h2>
+      <form (submit)="onUpdateCliente($event)">
+        <div class="form-group">
+          <label for="editnumeroTelefono">numeroTelefono</label>
+          <input
+            type="text"
+            id="editnumeroTelefono"
+            [value]="editingCliente.numeroTelefono"
+            (input)="onInputChange($event, 'numeroTelefono')"
+            class="form-control"
+            required
+          />
+        </div>
+
+
+        <div class="form-group">
+          <label for="editnumeroIdentificacion">numeroIdentificacion</label>
+          <input
+            type="text"
+            id="editnumeroIdentificacion"
+            [value]="editingCliente.numeroIdentificacion"
+            (input)="onInputChange($event, 'numeroIdentificacion')"
+            class="form-control"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="editcorreoElectronico">Correo Electrónico</label>
+          <input
+            type="email"
+            id="editcorreoElectronico"
+            [value]="editingCliente.correoElectronico"
+            (input)="onInputChange($event, 'correoElectronico')"
+            class="form-control"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="editdireccionCliente">direccion Cliente</label>
+          <input
+            type="text"
+            id="editdireccionCliente"
+            [value]="editingCliente.direccionCliente"
+            (input)="onInputChange($event, 'direccionCliente')"
+            class="form-control"
+            required
+          />
+        </div>
+
+
+        <button type="submit" class="btn btn-save" (click)="onUpdateCliente($event)">Guardar Cambios</button>
+        <button type="button" class="btn btn-cancel" (click)="closeModal()">Cancelar</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+
