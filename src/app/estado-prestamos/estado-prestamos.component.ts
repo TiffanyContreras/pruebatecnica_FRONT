@@ -116,7 +116,7 @@ export class EstadoPrestamosComponent implements OnInit {
 
     if(opcion==1){//Aprobar
       const datosCapturados = this.datosFormAprueba.value;
-      this.apiService.postAprobarPrestamo(datosCapturados).subscribe(
+      this.apiService.postPago(datosCapturados).subscribe(
 
         (response) => {
           console.log("RESPONSE: ",response);
@@ -147,7 +147,7 @@ export class EstadoPrestamosComponent implements OnInit {
             alert('Rechazado exitosamente');
             this.datosFormRechaza.reset();
           }else{
-            alert('A ocurrido un error');
+            alert('Se ha rechazado el prestamo con exito');
           }
           console.log("ERROR: ",error)
         }
